@@ -6,6 +6,7 @@ import {
     signalRenderItem,
     signalRenderList
 } from "./reactive";
+import { StatePiece } from "./reactive/type";
 
 let gid = 0;
 
@@ -49,14 +50,14 @@ class TodoManager implements IDataManager {
         ];
     }
 
-    getItem(id: string, extra: any) {
-        const { listName } = extra;
+    getItem(meta: StatePiece, options: any) {
+        const { listName } = meta.extraData;
         const list = listName === 'all' ? this.todos : this.completed;
-        return list.find(td => td.tid === id);
+        return Object.assign({}, list.find(td => td.tid === meta.key));
     }
 
-    getList(name: string, extra: any) {
-        const list = name === 'all' ? this.todos : this.completed;
+    getList(meta: StatePiece, extoptionsra: any) {
+        const list = meta.key === 'all' ? this.todos : this.completed;
         return list.map(t => t.tid);
     }
 

@@ -1,8 +1,7 @@
-import { ActionType, fullActionType } from "./reactive-utils";
+import { ActionType, fullActionType } from "./type";
 
 
 var store: any;
-
 export function configStore(_store: any) {
     store = _store;
 }

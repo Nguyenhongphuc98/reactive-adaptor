@@ -1,4 +1,4 @@
 
-export * from "./reactive-adaptor";
-export * from "./reactive-action";
-export * from "./reactive-selector";
+export * from "./adaptor";
+export * from "./action";
+export * from "./selector";

@@ -1,12 +1,4 @@
-import { ActionType, fullActionType, RAAction } from "./reactive-utils";
-
-interface IDataManager {
-    name: string;
-    key: string | string[];
-
-    getItem(id: string, extra: any): any;
-    getList(name: string, extra: any): string[];
-}
+import { ActionType, fullActionType, RAAction, IDataManager } from "./type";
 
 const ManagerInitState = {
     items: {},
@@ -23,6 +15,10 @@ class ReactiveAdaptor {
     }
 
     public registerDataManager(manager: IDataManager) {
+        if (this._getManager(manager.name)) {
+            console.error("Register duplicate manager", manager.name);
+            return;
+        }
         this.managers.push(manager);
     }
 
@@ -38,23 +34,29 @@ class ReactiveAdaptor {
         return reducers;
     }
 
-    public getItem(manager: string, id: string, extra: any): any {
-        const _m = this.managers.find(m => m.name === manager);
+    public getItem(manager: string, meta: any, options?: any): any {
+        const _m = this._getManager(manager);
         if (!_m) return undefined;
-        return _m.getItem(id, extra);
+        return _m.getItem(meta, options);
     }
 
-    public getList(manager: string, listName: string, extra: any): any {
-        const _m = this.managers.find(m => m.name === manager);
+    public getList(manager: string, meta: any, options?: any): any {
+        console.log('get list option', options);
+        
+        const _m = this._getManager(manager);
         if (!_m) return undefined;
-        return _m.getList(listName, extra);
+        return _m.getList(meta, options);
+    }
+
+    private _getManager(name: string) {
+        return this.managers.find(m => m.name === name);
     }
 
     private _createReducer(manager: IDataManager) {
         const reducer = (state: any = ManagerInitState, action: RAAction) => {
             const newState = { ...state };
             const { type, payload } = action;
-            
+
             switch (type) {
 
                 case fullActionType(manager.name, ActionType.ITEM_CHANGED):

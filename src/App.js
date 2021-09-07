@@ -10,6 +10,7 @@ const st = {
 function App() {
   return (
     <div style={st}>
+      {/* <TodoList type='all' /> */}
       <TodoList type='all' />
       <TodoList type='complete' />
     </div>
