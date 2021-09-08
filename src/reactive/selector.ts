@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { reactiveAdaptor } from "./adaptor";
 import { createSelector } from "reselect";
-import { RADefaultSelector, ISelector, SelectorOption } from "./type";
+import { RADefaultSelector, ISelector, SelectorOption, StatePiece } from "./type";
 
 
 /**
@@ -70,4 +70,25 @@ export function useList(
     )
 
     return useSelector(selector, _options.equalityFn);
+}
+
+/**
+ * A hook that allow user get piece state from RA's store with no manager name required
+ * @param _key key of item need to get state
+ * @returns StatePiece - all info in state of that item
+ */
+export function useMiniItem(_key: string): StatePiece {
+
+    const selectors = reactiveAdaptor.managers.map(m => {
+        return (state: any) => (state as any)[m.name].items[_key];
+    })
+
+    const selector = createSelector(
+        selectors,
+        metas => {
+            return metas.filter((m: any) => m);
+        }
+    )
+
+    return useSelector(selector);
 }

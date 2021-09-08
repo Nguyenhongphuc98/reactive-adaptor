@@ -41,8 +41,6 @@ class ReactiveAdaptor {
     }
 
     public getList(manager: string, meta: any, options?: any): any {
-        console.log('get list option', options);
-        
         const _m = this._getManager(manager);
         if (!_m) return undefined;
         return _m.getList(meta, options);

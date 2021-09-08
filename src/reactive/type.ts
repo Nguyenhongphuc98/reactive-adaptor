@@ -45,6 +45,8 @@ export type StatePiece = {
     extraData: any
 }
 
+export type StateType  = "lists" | "items";
+
 export interface IDataManager {
     name: string;
     key: string | string[];

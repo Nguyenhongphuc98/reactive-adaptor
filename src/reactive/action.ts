@@ -1,3 +1,4 @@
+import { IDataManager, reactiveAdaptor, StateType } from ".";
 import { ActionType, fullActionType } from "./type";
 
 
@@ -52,4 +53,16 @@ export function signalRemoveList(manager: string, listName: string) {
         type: fullActionType(manager, ActionType.LIST_REMOVE),
         payload: { key: listName }
     })
+}
+
+export function getState() {
+    return store.getState();
+}
+
+export function getManagerOf(type: StateType, key: string): IDataManager | undefined {
+    for (let index = 0; index < reactiveAdaptor.managers.length; index++) {
+        const m = reactiveAdaptor.managers[index];
+        if (store.getState()[m.name][type][key])
+            return m;
+    }
 }
