@@ -1,27 +1,28 @@
 
 import chatManager from "../manager/chat-manager";
-import friendChatManager from "../manager/friend-chat-manager";
-import groupChatManager from "../manager/group-chat-manager";
-
 
 class ChatController {
 
     limitProcess: number;
     numberProcess: number;
 
+    didInit: boolean;
+
     constructor() {
         this.limitProcess = 1;
         this.numberProcess = 0;
+        this.didInit = false;
     }
 
     init(): Promise<boolean> {
-        return friendChatManager.init()
-            .then(v => {
-                return groupChatManager.init()
-            })
-            .then(v => {
-                return chatManager.init();
-            })
+        if (this.didInit) return Promise.resolve(true);
+        console.log('Init Chatcontroller');
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(true);
+            }, 3000);
+        });
     }
 
     changeList(convId: string) {
@@ -45,11 +46,11 @@ class ChatController {
     }
 
     changeConv(convId: string) {
-        if (!convId || convId.length <5) {
+        if (!convId || convId.length < 5) {
             console.log("Invalid convId, please try other!");
             return;
         }
-       chatManager.changeConv(convId);
+        chatManager.changeConv(convId);
     }
 
     getCurrentConv() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useList } from '../reactive';
-import ConvItem from './ConvItem';
+import ConvItem from './conv-item';
 
 const ConvList = (props) => {
     const {name, controller} = props;

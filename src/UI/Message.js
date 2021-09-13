@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useItem } from '../reactive';
 
 const Message = (props) => {

@@ -9,6 +9,10 @@ class ChatBoxControllerManager {
         this.controllers = []
     }
 
+    init() {
+        console.log("Init Chatboxcontroller manager");
+    }
+
     getControllerById(cid: string): ChatBoxController {
         let controller = this.controllers.find(c => c.convId === cid);
         if (!controller) {

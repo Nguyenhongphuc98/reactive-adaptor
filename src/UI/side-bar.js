@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
-import Category from './Category';
-import ConvList from './ConvList';
+import Category from './category';
+import ConvList from './conv-list';
 
 const SideBar = (props) => {
     const {chatController} = props;

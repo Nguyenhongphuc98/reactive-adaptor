@@ -1,9 +1,9 @@
 import React from 'react';
-import ChatBoxControllerManager from '../controller/ChatBoxControllerManager';
+import ChatBoxControllerManager from '../controller/chat-box-controller-manager';
 import { useItem } from '../reactive';
-import ChatBoxHeader from './ChatBoxHeader';
-import ChatInput from './ChatInput';
-import Message from './Message';
+import ChatBoxHeader from './chat-box-header';
+import ChatInput from './chat-input';
+import Message from './message';
 
 const ChatBoxView = (props) => {
     const id = useItem("ChatManager", "currentConv");

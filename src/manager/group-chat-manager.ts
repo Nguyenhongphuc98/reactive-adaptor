@@ -27,8 +27,8 @@ class GroupChatManager implements IDataManager {
                         this.convItems.push(element);
                         signalAddItem(this.name, element.id, {inGroup: true});
                     }
-                    this.didInit = true;
                     signalAddList(this.name, "all");
+                    this.didInit = true;
                     return Promise.resolve(true);
                 })
     }

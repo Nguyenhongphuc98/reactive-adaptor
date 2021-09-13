@@ -27,8 +27,8 @@ class FriendChatManager implements IDataManager {
                         this.convItems.push(element);
                         signalAddItem(this.name, element.id, {inGroup: false});
                     }
-                    this.didInit = true;
                     signalAddList(this.name, "all");
+                    this.didInit = true;
                     return Promise.resolve(true);
                 })
     }

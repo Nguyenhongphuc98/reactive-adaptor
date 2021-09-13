@@ -16,26 +16,29 @@ class ChatBoxController {
         this.numberProcess = 0;
     }
 
-    updateConvContent(content: string) {
-        if (content.length < 2) {
-            console.log("Content must contain atleast 10 character!");
-            return;
-        }
-
-        if (this.numberProcess >= this.limitProcess) {
-            console.log("Exceed req at same time, try later!");
-            return;
-        }
-
-        this.numberProcess++;
-        setTimeout(() => {
-            const manager = getState().ChatManager.items[this.convId].extraData.inGroup
-
-                ? groupChatManager
-                : friendChatManager;
-            manager.updateConvContent(this.convId, content);
-            this.numberProcess--;
-        }, 10000);
+    updateConvContent(content: string): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            if (content.length < 2) {
+                console.log("Content must contain atleast 10 character!");
+                resolve(false);
+            }
+    
+            if (this.numberProcess >= this.limitProcess) {
+                console.log("Exceed req at same time, try later!");
+                resolve(false);
+            }
+    
+            this.numberProcess++;
+            setTimeout(() => {
+                const manager = getState().ChatManager.items[this.convId].extraData.inGroup
+    
+                    ? groupChatManager
+                    : friendChatManager;
+                manager.updateConvContent(this.convId, content);
+                this.numberProcess--;
+                resolve(true);
+            }, 2000);
+        });
     }
 
     updateConvtitle(title: string) {
@@ -57,7 +60,7 @@ class ChatBoxController {
 
             manager.updateConvtitle(this.convId, title);
             this.numberProcess--;
-        }, 10000);
+        }, 0);
     }
 }
 

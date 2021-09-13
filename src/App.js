@@ -1,37 +1,36 @@
 import { useState, useEffect } from 'react';
-import ChatController from './controller/chat-controller';
-import ChatBoxView from './UI/ChatBoxView';
+import ChatBoxView from './UI/chat-box-view';
 
 import "./index.css";
-import SideBar from './UI/SideBar';
+import SideBar from './UI/side-bar';
+import appInstance from './chat-application';
+import Loader from './UI/loader';
 
 
 function App() {
 
   const [loading, setLoading] = useState(true);
 
-  const chatController = new ChatController();
-
   useEffect(() => {
-  chatController.init()
-    .then(v => {
-       setLoading(false);
-    })
-}, []);
+    appInstance.chatController.init()
+      .then(v => {
+        setLoading(false);
+      })
+  }, []);
 
   console.log('App render...............');
 
   const renderContent = () => {
     return (
       <div className="app-content">
-        <SideBar chatController = {chatController}/>
-        <ChatBoxView/>
+        <SideBar chatController={appInstance.chatController} />
+        <ChatBoxView />
       </div>
     )
   }
   return (
     <div className="app">
-      {loading ? <h1>Loading...</h1> : renderContent()}
+      {loading ? <Loader/> : renderContent()}
     </div>
   );
 }

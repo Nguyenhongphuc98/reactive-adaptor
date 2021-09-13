@@ -95,7 +95,7 @@ class ChatManager implements IDataManager {
             this.importance = this.importance.filter(v => v !== convId);
             signalRenderList(this.name, 'importance');
         } else {
-            this.normal = this.normal.filter(v => v != convId);
+            this.normal = this.normal.filter(v => v !== convId);
             signalRenderList(this.name, 'normal');
         }
     }
