@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
 import { reactiveAdaptor } from "./adaptor";
 import { createSelector } from "reselect";
-import { RADefaultSelector, ISelector, SelectorOption, StatePiece } from "./type";
+import { RADefaultSelector, ISelector, SelectorOption } from "./type";
+import { useEffect } from "react";
+import { MountInfoType } from ".";
 
 
 /**
@@ -28,6 +30,9 @@ export function useItem(
         _options = _selector;
         _selector = RADefaultSelector;
     }
+
+    UpdateMountInfo("i", _key);
+
     const selector = createSelector(
         state => (state as any)[_manager].items[_key],
         meta => {
@@ -62,6 +67,9 @@ export function useList(
         _options = _selector;
         _selector = RADefaultSelector;
     }
+
+    UpdateMountInfo("l", _key);
+
     const selector = createSelector(
         state => (state as any)[_manager].lists[_key],
         meta => {
@@ -72,23 +80,12 @@ export function useList(
     return useSelector(selector, _options.equalityFn);
 }
 
-/**
- * A hook that allow user get piece state from RA's store with no manager name required
- * @param _key key of item need to get state
- * @returns StatePiece - all info in state of that item
- */
-export function useMiniItem(_key: string): StatePiece {
-
-    const selectors = reactiveAdaptor.managers.map(m => {
-        return (state: any) => (state as any)[m.name].items[_key];
-    })
-
-    const selector = createSelector(
-        selectors,
-        metas => {
-            return metas.filter((m: any) => m);
+function UpdateMountInfo(type: MountInfoType, key: string) {
+    const _key = `${type}${key}`;
+    useEffect(() => {
+        reactiveAdaptor.itemMount(_key);
+        return () => {
+            reactiveAdaptor.itemUnmount(_key);
         }
-    )
-
-    return useSelector(selector);
+    }, [_key])
 }

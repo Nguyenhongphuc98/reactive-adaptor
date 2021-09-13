@@ -8,6 +8,9 @@ export function configStore(_store: any) {
 }
 
 export function signalRenderItem(manager: string, key: string) {
+    if (!reactiveAdaptor.shouldSignal("i", key))
+        return;
+
     store.dispatch({
         type: fullActionType(manager, ActionType.ITEM_CHANGED),
         payload: { key: key }
@@ -15,6 +18,9 @@ export function signalRenderItem(manager: string, key: string) {
 }
 
 export function signalRenderList(manager: string, listName: string) {
+    if (!reactiveAdaptor.shouldSignal("l", listName))
+        return;
+
     store.dispatch({
         type: fullActionType(manager, ActionType.LIST_CHANGED),
         payload: { key: listName }

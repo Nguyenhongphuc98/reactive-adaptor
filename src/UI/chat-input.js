@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { store } from "../store";
 import Loader from "./loader";
 
 const ChatInput = (props) => {

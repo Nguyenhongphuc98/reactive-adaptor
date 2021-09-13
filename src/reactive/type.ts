@@ -29,6 +29,7 @@ export function fullActionType(manager: string, type: string) {
  * Selector //////////////////////////////////////////////////////////////
  */
 export type ISelector<S, R> = (state: S) => R;
+export type MountInfoType = "i" | "l";
 export type SelectorOption<TSelected = unknown> = {
     equalityFn?: (left: TSelected, right: TSelected) => boolean,
     getOption?: any

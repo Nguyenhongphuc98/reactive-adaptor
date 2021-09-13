@@ -1,5 +1,5 @@
 import React from 'react';
-import { useItem } from '../reactive';
+import { useItem, useMiniItem } from '../reactive';
 
 const ConvItem = (props) => {
     const { id, controller } = props;
