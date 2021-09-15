@@ -14,14 +14,14 @@ code {
 
 .app {
   background-color: #b1c6d155;
-  width: 800px;
+  width: 1000px;
   margin: auto;
   padding: 20px;
 }
 
 .app-content {
   display: flex;
-  min-height: 590px;
+  height: 550px;
 }
 
 .category {
@@ -33,6 +33,10 @@ code {
   padding: 5px;
   background-color: #6092f88a;
   border-radius: 15px;
+  cursor: pointer;
+  width: 40%;
+  text-align: center;
+  text-transform: capitalize;
 }
 
 .active {
@@ -40,28 +44,52 @@ code {
 }
 
 .side-bar {
-  width: 231px;
+  width: 345px;
   background-color: #d4b4ee66;
   padding: 7px;
+  height: 100%;
+  overflow-y: auto;
 }
-
+.side-bar::-webkit-scrollbar {
+  width: 5px;
+}
+.side-bar::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 3px;
+}
 .list {
 
 }
 
 .conv-item {
-  height: 40px;
+  height: 50px;
   background-color: #fff5;
-  margin-bottom: 3px;
-  padding-top: 12px;
-  padding-left: 5px;
+  margin-bottom: 5px;
   display: flex;
+  padding: 5px;
+  border-radius: 5px;
+  align-items: center;
 }
 
-.conv-item p {
-  width: 157px;
-    padding: 0px;
-    margin: 0px;
+.conv-item img {
+  border-radius: 50%;
+  width: 40px;
+}
+
+.conv-item div {
+  margin-left: 5px;
+  width: 100%;
+}
+
+.conv-item div p {
+  margin: 0px;
+  padding: 0px;
+  color: #303439;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .conv-item button {
@@ -77,7 +105,7 @@ code {
     margin-left: 5px;
     padding: 5px;
     position: relative;
-    width: 100%;
+    flex: 1;
 }
 
 .chat-header {
@@ -91,13 +119,13 @@ code {
 
 .message {
   width: 430px;
-  right: 5px;
-  position: absolute;
-  top: 50px;
+
+  margin-top: 20px;
   background-color: #3097ff;
   border-radius: 10px;
   padding: 5px;
   color: white;
+  margin-left: auto;
 }
 
 .chat-input {
@@ -106,12 +134,15 @@ code {
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 100%;
+  right: 5px;
 }
 
 .chat-input input{
   width: 485px;
   margin: 5px;
   height: 24px;
+  width: 100%;
 }
 
 .chat-input button {

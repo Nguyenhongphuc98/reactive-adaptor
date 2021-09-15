@@ -6,33 +6,32 @@ import SideBar from './UI/side-bar';
 import appInstance from './chat-application';
 import Loader from './UI/loader';
 
-
 function App() {
 
-  const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    appInstance.chatController.init()
-      .then(v => {
-        setLoading(false);
-      })
-  }, []);
+    useEffect(() => {
+        appInstance.chatController.init()
+            .then(v => {
+                setLoading(false);
+            })
+    }, []);
 
-  console.log('App render...............');
+    console.log('App render...............');
 
-  const renderContent = () => {
+    const renderContent = () => {
+        return (
+            <div className="app-content">
+                <SideBar chatController={appInstance.chatController} />
+                <ChatBoxView />
+            </div>
+        )
+    }
     return (
-      <div className="app-content">
-        <SideBar chatController={appInstance.chatController} />
-        <ChatBoxView />
-      </div>
-    )
-  }
-  return (
-    <div className="app">
-      {loading ? <Loader/> : renderContent()}
-    </div>
-  );
+        <div className="app">
+            {loading ? <Loader /> : renderContent()}
+        </div>
+    );
 }
 
 export default App;

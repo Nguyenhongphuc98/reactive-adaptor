@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useItem } from '../reactive';
 
 const ChatBoxHeader = (props) => {
     const { id, controller } = props;
-    const itemName = useItem("ChatManager", id, item => item.name);
+    const itemName = useItem("ChatManager", id, item => item ? item.convName : "");
 
     const [edit, setEdit] = useState(false);
 
@@ -12,7 +12,7 @@ const ChatBoxHeader = (props) => {
         if (edit) {
             // save
             const text = document.getElementById("iptt").value;
-            controller.updateConvtitle(text);
+            controller.updateConvName(text);
             document.getElementById("iptt").value = "";
         }
         setEdit(!edit);
@@ -27,4 +27,4 @@ const ChatBoxHeader = (props) => {
     );
 };
 
-export default ChatBoxHeader;
+export default memo(ChatBoxHeader);

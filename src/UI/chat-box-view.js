@@ -3,7 +3,7 @@ import ChatBoxControllerManager from '../controller/chat-box-controller-manager'
 import { useItem } from '../reactive';
 import ChatBoxHeader from './chat-box-header';
 import ChatInput from './chat-input';
-import Message from './message';
+import MessageList from './message-list';
 
 const ChatBoxView = (props) => {
     const id = useItem("ChatManager", "currentConv");
@@ -18,9 +18,9 @@ const ChatBoxView = (props) => {
     console.log('render ChatBoxView', id);
     return (
         <div className="chat-box-view">
-            {/* <ChatBoxHeader id = {id} controller = {controller}/> */}
-            {showMess? <Message id = {id} controller = {controller}/> : null}
-            <button onClick={toggleMess}>{showMess? "Hide Mess" : "Show Mess"}</button>
+            <ChatBoxHeader id = {id} controller = {controller}/>
+            <button style={{marginLeft: "500px"}} onClick={toggleMess}>{showMess? "Hide Mess" : "Show Mess"}</button>
+            {showMess? <MessageList convId = {id}/> : null}
             <ChatInput id = {id} controller = {controller}/>
         </div>
     );

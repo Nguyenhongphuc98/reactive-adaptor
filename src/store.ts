@@ -1,12 +1,12 @@
 import {createStore, combineReducers} from 'redux';
 import { reactiveAdaptor, configStore } from './reactive';
 import  chatManager  from './manager/chat-manager';
-import groupChatManager from './manager/group-chat-manager';
-import friendChatManager from './manager/friend-chat-manager';
+import groupManager from './manager/group-manager';
+import friendManager from './manager/friend-manager';
 
 reactiveAdaptor.registerDataManager(chatManager);
-reactiveAdaptor.registerDataManager(groupChatManager);
-reactiveAdaptor.registerDataManager(friendChatManager);
+reactiveAdaptor.registerDataManager(groupManager);
+reactiveAdaptor.registerDataManager(friendManager);
 
 const raReducer = reactiveAdaptor.createReducer();
 

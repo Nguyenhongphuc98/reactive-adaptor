@@ -1,9 +1,10 @@
 
+import { memo } from 'react';
 import { useItem } from '../reactive';
 
 const Message = (props) => {
-    const {id} = props;
-    const content = useItem("ChatManager", id, item => item.content);
+    const { id } = props;
+    const content = useItem("ChatManager", id, item => item.content, {equalityFn: (l,r) => l === r});
 
     console.log('render Message', content);
     return (
@@ -13,4 +14,4 @@ const Message = (props) => {
     );
 };
 
-export default Message;
+export default memo(Message);

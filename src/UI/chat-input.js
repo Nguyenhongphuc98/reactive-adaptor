@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { store } from "../store";
+import { memo, useState } from "react";
 import Loader from "./loader";
 
 const ChatInput = (props) => {
@@ -11,7 +10,7 @@ const ChatInput = (props) => {
 
         setSending(true);
         document.getElementById("ipct").value = "";
-        controller.updateConvContent(text)
+        controller.sendMessage(text)
             .then(r => {
                 setSending(false);
             })
@@ -26,4 +25,4 @@ const ChatInput = (props) => {
     );
 };
 
-export default ChatInput;
+export default memo(ChatInput);

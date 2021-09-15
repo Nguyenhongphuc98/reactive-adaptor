@@ -1,7 +1,7 @@
 import ChatController from "./controller/chat-controller";
 import chatManager from "./manager/chat-manager";
-import friendChatManager from "./manager/friend-chat-manager";
-import groupChatManager from "./manager/group-chat-manager";
+import friendManager from "./manager/friend-manager";
+import groupManager from "./manager/group-manager";
 
 
 class ChatApplication {
@@ -31,9 +31,9 @@ class ChatApplication {
 
     private initManager() {
         console.log("Init manager...");
-        return friendChatManager.init()
+        return friendManager.init()
         .then(v => {
-            return groupChatManager.init();
+            return groupManager.init();
         })
         .then(v => {
             return  chatManager.init();

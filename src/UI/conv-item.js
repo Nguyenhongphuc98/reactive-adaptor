@@ -1,10 +1,20 @@
 import React from 'react';
-import { useItem, useMiniItem } from '../reactive';
+import { useItem } from '../reactive';
 
 const ConvItem = (props) => {
     const { id, controller } = props;
-    const itemName = useItem("ChatManager", id, item => item.name);
-    const activeItem = useItem("ChatManager", "currentConv", { equalityFn: (l, r) => (l !== id && r !== id) || l === r });
+    const miniConv = useItem("ChatManager", id, item => {
+        return {
+            convName: item.convName,
+            avatar: item.avatar,
+            lastMess: item.lastMessage,
+            lastDname: item.lastDname
+        };
+    });
+
+    const activeItem = useItem("ChatManager", "currentConv", {
+        equalityFn: (l, r) => (l !== id && r !== id) || l === r
+    });
 
     const itemClicked = (e) => {
         e.preventDefault();
@@ -23,10 +33,14 @@ const ConvItem = (props) => {
         controller.removeItem(id);
     }
 
-    console.log('render ConvItem', itemName);
+    console.log('render ConvItem', miniConv);
     return (
         <div className={`conv-item ${activeItem === id ? " conv-active" : ""}`}>
-            <p onClick={itemClicked}>{itemName}</p>
+            <img src={miniConv.avatar} alt={miniConv.convName} />
+            <div onClick={itemClicked}>
+                <p><b>{miniConv.convName}</b></p>
+                <p> {`${miniConv.lastDname ? miniConv.lastDname +":": ""} ${miniConv.lastMess}`}</p>
+            </div>
             <button className="impo" onClick={changeList}>~</button>
             <button className="impo" onClick={remove}>x</button>
         </div>

@@ -3,12 +3,14 @@
  * Action //////////////////////////////////////////////////////////////
  */
 export const ActionType = Object.freeze({
-    ITEM_CHANGED: "ITEM_CHANGED",
-    LIST_CHANGED: "LIST_CHANGED",
+    ITEM_CHANGED: "ITEM_CHANGED", // Only change version
+    LIST_CHANGED: "LIST_CHANGED", // Only change version
     ITEM_ADDED: "ITEM_ADDED",
     LIST_ADDED: "LIST_ADDED",
     ITEM_REMOVE: "ITEM_REMOVE",
     LIST_REMOVE: "LIST_REMOVE",
+    ITEM_UPDATE: "ITEM_UPDATE",
+    LIST_UPDATE: "LIST_UPDATE",
 })
 
 export type RAPayload = {

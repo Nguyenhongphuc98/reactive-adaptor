@@ -64,7 +64,7 @@ class ReactiveAdaptor {
     public shouldSignal(type: MountInfoType, key: string): boolean {
         const _key = `${type}${key}`;
         const item = this.mountInfos.get(_key);
-        return item != undefined && item > 0;
+        return item !== undefined && item > 0;
     }
 
     private _getManager(name: string) {
@@ -101,6 +101,20 @@ class ReactiveAdaptor {
                     newState.lists[payload.key] = {
                         key: payload.key,
                         version: 0,
+                        extraData: payload.extraData
+                    };
+                    break;
+                case fullActionType(manager.name, ActionType.ITEM_UPDATE):
+                    newState.items[payload.key] = {
+                        ...state.items[payload.key],
+                        version: state.items[payload.key].version + 1,
+                        extraData: payload.extraData
+                    };
+                    break;
+                case fullActionType(manager.name, ActionType.LIST_UPDATE):
+                    newState.lists[payload.key] = {
+                        ...state.lists[payload.key],
+                        version: state.lists[payload.key].version + 1,
                         extraData: payload.extraData
                     };
                     break;

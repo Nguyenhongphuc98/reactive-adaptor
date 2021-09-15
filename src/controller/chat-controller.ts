@@ -26,7 +26,7 @@ class ChatController {
     }
 
     changeList(convId: string) {
-        if (chatManager.importance.includes(convId)) {
+        if (chatManager.isImportance(convId)) {
             this.markNormal(convId);
         } else {
             this.markImportance(convId);
