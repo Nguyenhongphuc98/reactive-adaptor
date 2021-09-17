@@ -13,7 +13,6 @@ class LocalData {
     convs: Conversation[] = [];
     me?: Friend = undefined;
 
-
     public FetchFriendFromDB(): Promise<Friend[]> {
         return new Promise((resolve, reject) => {
 

@@ -1,6 +1,6 @@
 
 import LocalData from '../data/local';
-import {Friend} from '../data/model/friend';
+import { Friend } from '../data/model/friend';
 import {
     IDataManager,
     signalAddItem,
@@ -34,7 +34,7 @@ class FriendManager implements IDataManager {
                         this.friends.push(element);
                         signalAddItem(this.name, element.frId);
                     }
-                    signalAddList(this.name, "all");
+                    signalAddList(this.name, "f-all");
                     this.didInit = true;
                     return Promise.resolve(true);
                 })
@@ -45,7 +45,7 @@ class FriendManager implements IDataManager {
     }
 
     getList(meta: StatePiece, options: any): string[] {
-        if (meta.key === "all")
+        if (meta.key === "f-all")
             return this.friends.map(item => item.frId);
         return []
     }
@@ -58,7 +58,7 @@ class FriendManager implements IDataManager {
     }
 
     getFullList(name: string): Friend[] {
-        if (name === "all") 
+        if (name === "all")
             return this.friends.slice();
         return [];
     }

@@ -34,7 +34,7 @@ class GroupManager implements IDataManager {
                         this.groups.push(element);
                         signalAddItem(this.name, element.groupId);
                     }
-                    signalAddList(this.name, "all");
+                    signalAddList(this.name, "g-all");
                     this.didInit = true;
                     return Promise.resolve(true);
                 })
@@ -45,7 +45,7 @@ class GroupManager implements IDataManager {
     }
 
     getList(meta: StatePiece, options: any): string[] {
-        if (meta.key === "all")
+        if (meta.key === "g-all")
             return this.groups.map(item => item.groupId);
         return []
     }
@@ -58,7 +58,7 @@ class GroupManager implements IDataManager {
     }
 
     getFullList(name: string): Group[] {
-        if (name === "all")
+        if (name === "g-all")
             return this.groups.slice();
         return [];
     }

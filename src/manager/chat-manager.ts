@@ -1,5 +1,6 @@
 
 import { Message } from '../data/model/message';
+import { Conversation } from '../data/model/conversation';
 
 import friendManager from './friend-manager';
 import groupManager from './group-manager';
@@ -14,8 +15,6 @@ import {
     signalUpdateItem,
     StatePiece
 } from '../reactive';
-import { Conversation } from '../data/model/conversation';
-import local from '../data/local';
 
 
 class ChatManager implements IDataManager {
@@ -47,6 +46,7 @@ class ChatManager implements IDataManager {
             LocalData.FetchConvFromDB()
                 .then(convs => {
                     convs.forEach(conv => {
+                        conv.convId = "c"+conv.convId;
                         if (conv.convType === "normal") {
                             this.normal.push(conv);
                             signalAddItem(this.name, conv.convId, { list: "normal" });
@@ -105,7 +105,9 @@ class ChatManager implements IDataManager {
     }
 
     updateConvName(convId: string, newName: string) {
-        let conv = this.normal.find(e => e.convId === convId) || this.importance.find(e => e.convId === convId);
+        let conv = this.normal.find(e => e.convId === convId)
+            || this.importance.find(e => e.convId === convId);
+
         if (conv) {
             conv.convName = newName;
             signalRenderItem(this.name, convId);
@@ -120,15 +122,15 @@ class ChatManager implements IDataManager {
 
     markImportance(convId: string) {
         let item = this.normal.find(e => e.convId === convId);
-        debugger;
+
         if (item) {
             this.normal = this.normal.filter(v => v.convId !== convId);
             this.importance.push(item);
-        }
 
-        signalUpdateItem(this.name, convId, { list: "importance" });
-        signalRenderList(this.name, 'normal');
-        signalRenderList(this.name, 'importance');
+            signalUpdateItem(this.name, convId, { list: "importance" });
+            signalRenderList(this.name, 'normal');
+            signalRenderList(this.name, 'importance');
+        }
     }
 
     markNormal(convId: string) {
@@ -137,11 +139,11 @@ class ChatManager implements IDataManager {
         if (item) {
             this.importance = this.importance.filter(v => v.convId !== convId);
             this.normal.push(item);
-        }
 
-        signalUpdateItem(this.name, convId, { list: "normal" });
-        signalRenderList(this.name, 'normal');
-        signalRenderList(this.name, 'importance');
+            signalUpdateItem(this.name, convId, { list: "normal" });
+            signalRenderList(this.name, 'normal');
+            signalRenderList(this.name, 'importance');
+        }
     }
 
     removeItem(convId: string) {
@@ -165,14 +167,15 @@ class ChatManager implements IDataManager {
 
         // make sure this send to valid conversation
         const convId = message.convId;
-        const conv = this.importance.find(e => e.convId === convId) || this.normal.find(e => e.convId === convId);
+        const conv = this.importance.find(e => e.convId === convId)
+            || this.normal.find(e => e.convId === convId);
 
         if (!conv) {
             console.log('Send to unknow conversation');
             return;
         }
 
-        conv.lastDname = local.me?.dName || "";
+        conv.lastDname = LocalData.me?.dName || "";
         conv.lastMessage = message.content;
         conv.lastMessageId = message.mId;
 

@@ -1,7 +1,7 @@
 
-/**
- * Action //////////////////////////////////////////////////////////////
- */
+//
+// Action //////////////////////////////////////////////////////////////
+//
 export const ActionType = Object.freeze({
     ITEM_CHANGED: "ITEM_CHANGED", // Only change version
     LIST_CHANGED: "LIST_CHANGED", // Only change version
@@ -27,9 +27,9 @@ export function fullActionType(manager: string, type: string) {
     return `${manager}_${type}`;
 }
 
-/**
- * Selector //////////////////////////////////////////////////////////////
- */
+//
+// Selector //////////////////////////////////////////////////////////////
+//
 export type ISelector<S, R> = (state: S) => R;
 export type MountInfoType = "i" | "l";
 export type SelectorOption<TSelected = unknown> = {
@@ -39,9 +39,9 @@ export type SelectorOption<TSelected = unknown> = {
 export const RADefaultSelector = (data:any) => data;
 
 
-/**
- * Data //////////////////////////////////////////////////////////////
- */
+//
+// Data //////////////////////////////////////////////////////////////
+//
 export type StatePiece = {
     key: string,
     version: number

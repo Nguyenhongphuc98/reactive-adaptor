@@ -17,8 +17,6 @@ function App() {
             })
     }, []);
 
-    console.log('App render...............');
-
     const renderContent = () => {
         return (
             <div className="app-content">
@@ -27,6 +25,8 @@ function App() {
             </div>
         )
     }
+
+    console.log('App render...............');
     return (
         <div className="app">
             {loading ? <Loader /> : renderContent()}

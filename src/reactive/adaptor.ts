@@ -52,13 +52,13 @@ class ReactiveAdaptor {
     public itemMount(key: string) {
         const item = this.mountInfos.get(key);
         this.mountInfos.set(key, item ? item + 1 : 1);
-        console.log('Item mount- ', key, this.mountInfos.get(key));
+        // console.log('Item mount- ', key, this.mountInfos.get(key));
     }
 
     public itemUnmount(key: string) {
         const item = this.mountInfos.get(key);
         this.mountInfos.set(key, item ? item - 1 : 0);
-        console.log('Item Unmount- ', key, this.mountInfos.get(key));
+        // console.log('Item Unmount- ', key, this.mountInfos.get(key));
     }
 
     public shouldSignal(type: MountInfoType, key: string): boolean {

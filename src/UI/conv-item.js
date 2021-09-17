@@ -3,6 +3,7 @@ import { useItem } from '../reactive';
 
 const ConvItem = (props) => {
     const { id, controller } = props;
+    
     const miniConv = useItem("ChatManager", id, item => {
         return {
             convName: item.convName,

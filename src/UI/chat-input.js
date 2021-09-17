@@ -3,8 +3,8 @@ import Loader from "./loader";
 
 const ChatInput = (props) => {
     const { controller } = props;
-
     const [sending, setSending] = useState(false);
+    
     const chat = () => {
         const text = document.getElementById("ipct").value;
 
