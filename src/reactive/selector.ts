@@ -26,21 +26,12 @@ export function useItem(
     _selector: ISelector<any, any> = RADefaultSelector,
     _options: SelectorOption = {}
 ) {
-    if (typeof _selector !== 'function') {
-        _options = _selector;
-        _selector = RADefaultSelector;
-    }
 
     UpdateMountInfo("i", _key);
-
-    const selector = createSelector(
-        state => (state as any)[_manager].items[_key],
-        meta => {
-            return _selector(reactiveAdaptor.getItem(_manager, meta, _options.getOption));
-        }
-    )
-
-    return useSelector(selector, _options.equalityFn);
+    return useSelector(
+        selectorFactory("items", _manager, _key, _selector, _options),
+        _options.equalityFn
+    );
 }
 
 /**
@@ -63,22 +54,17 @@ export function useList(
     _selector: ISelector<any, any> = RADefaultSelector,
     _options: SelectorOption = {}
 ) {
-    if (typeof _selector !== 'function') {
-        _options = _selector;
-        _selector = RADefaultSelector;
-    }
 
     UpdateMountInfo("l", _key);
-
-    const selector = createSelector(
-        state => (state as any)[_manager].lists[_key],
-        meta => {
-            return _selector(reactiveAdaptor.getList(_manager, meta, _options.getOption));
-        }
-    )
-
-    return useSelector(selector, _options.equalityFn);
+    return useSelector(
+        selectorFactory("lists", _manager, _key, _selector, _options),
+        _options.equalityFn
+    );
 }
+
+//
+// Begin Internal utils ===========================================================
+//
 
 function UpdateMountInfo(type: MountInfoType, key: string) {
     const _key = `${type}${key}`;
@@ -89,3 +75,42 @@ function UpdateMountInfo(type: MountInfoType, key: string) {
         }
     }, [_key])
 }
+
+const selectorFactory = (() => {
+    const selectors = new Map();
+
+    return function (
+        _type: string,
+        _manager: string,
+        _key: string,
+        _selector: ISelector<any, any>,
+        _options: SelectorOption
+    ) {
+
+        if (typeof _selector !== 'function') {
+            _options = _selector;
+            _selector = RADefaultSelector;
+        }
+
+        const storeKey = _type + _manager + _key + _selector;
+        if (selectors.has(storeKey))
+            return selectors.get(storeKey);
+
+        const rSelector = createSelector(
+            state => (state as any)[_manager][_type][_key],
+            meta => {
+                return _selector(
+                    _type === "items"
+                        ? reactiveAdaptor.getItem(_manager, meta, _options.getOption)
+                        : reactiveAdaptor.getList(_manager, meta, _options.getOption)
+                );
+            }
+        )
+        selectors.set(storeKey, rSelector);
+        return rSelector;
+    }
+})();
+
+//
+// End Internal utils ===========================================================
+//

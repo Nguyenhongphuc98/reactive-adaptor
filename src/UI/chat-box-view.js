@@ -6,7 +6,10 @@ import ChatInput from './chat-input';
 import MessageList from './message-list';
 
 const ChatBoxView = (props) => {
-    const id = useItem("ChatManager", "currentConv");
+    const id = useItem("ChatManager", "currentConv", item => {
+        console.log("runing chatboxview selector", item);
+        return item;
+    });
     const controller = ChatBoxControllerManager.getControllerById(id);
 
     const [showMess, setShowMess] = useState(true);
